@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import axios from 'axios'
-import DisplayZip from './displayZip'
-
+import './App.css'
 
 class SearchZip extends Component {
 
@@ -22,7 +21,7 @@ class SearchZip extends Component {
 
     fetchCity = () => {
         axios
-          .get(`http://ctp-zip-api.herokuapp.com/city/${this.state.city}`)
+          .get(`http://ctp-zip-api.herokuapp.com/city/${this.state.city.toUpperCase()}`)
           .then((result) => {
             this.setState({
               cityData: result.data,
@@ -39,13 +38,13 @@ class SearchZip extends Component {
     render() {
         return (
 
-            <div>
+            <div className="searchCity">
                 <div>
                 
                 <h4>Enter City</h4>
                 <input 
                 className= "searchInput"
-                name= "seachCity"
+                name= "searchCity"
                 type= "text"
                 onChange= {(e) => {this.handleChange(e)}}
                 value= {this.state.city}>
@@ -57,10 +56,16 @@ class SearchZip extends Component {
             {this.state.match ? (
 
             <div>
-                {this.state.cityData.map((elem) => {return (<div> {elem} </div>)})}
+                {this.state.cityData.map((elem) => {
+                    return (
+                        <div> 
+                            ZipCodes: {elem} 
+                        </div>
+                    )
+                })}
             </div>
             ) : (
-                <p>Doesn't exist </p>
+                <p>Doesn't exist</p>
             )}
             </div>
         )

@@ -4,9 +4,9 @@ import SearchZip from './searchZip'
 
 function App() {
   return (
-    <h1>Hellow World
+    <div>
     <SearchZip/>
-    </h1>
+    </div>
 
   );
 }
