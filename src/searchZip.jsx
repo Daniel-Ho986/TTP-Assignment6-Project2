@@ -10,25 +10,26 @@ class SearchZip extends Component {
         super (props)
         this.state = {
 
-            zipData: [],
-            zips: " ",
+            cityData: [],
+            city: "",
             match: false
         }
     }
     
     handleChange = (event) => {
-        this.setState ({zips: event.target.value})
+        this.setState ({city: event.target.value})
     }
 
     fetchCity = () => {
         axios
-          .get('http://ctp-zip-api.herokuapp.com/city/SPRINGFIELD')
+          .get(`http://ctp-zip-api.herokuapp.com/city/${this.state.city}`)
           .then((result) => {
             this.setState({
-              zipData: result.data,
+              cityData: result.data,
               match: true,
             });
-            console.log (result)
+
+            console.log (this.state.cityData)
           })
           .catch((err) => {
             console.log(err);
@@ -47,7 +48,7 @@ class SearchZip extends Component {
                 name= "seachCity"
                 type= "text"
                 onChange= {(e) => {this.handleChange(e)}}
-                value= {this.state.zips}>
+                value= {this.state.city}>
                 </input>
                 <button onClick={this.fetchCity}>Search</button>
                 </div>
@@ -56,7 +57,7 @@ class SearchZip extends Component {
             {this.state.match ? (
 
             <div>
-                {Array.from(this.state.zipData).forEach((elem) => {return (elem)})}
+                {this.state.cityData.map((elem) => {return (<div> {elem} </div>)})}
             </div>
             ) : (
                 <p>Doesn't exist </p>
